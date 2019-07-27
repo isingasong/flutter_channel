@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements IShowMessage{
     @Override
     public void onShowMessage(String message) {
 
-        String s = "";
-
     }
 
     @Override
