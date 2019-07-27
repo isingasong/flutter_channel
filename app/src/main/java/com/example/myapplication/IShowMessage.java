@@ -5,7 +5,9 @@ package com.example.myapplication;
  * Description:
  */
 public interface IShowMessage {
-    void onShowMessage(String message);
+    void onShowBasicMessage(String message);
+    void onShowMethodMessage(String message);
+    void onShowEventMessage(String message);
     void basicChannelSendMessage(String message);
     void eventChannelSendMessage(String message);
     void methodChannelSendMessage(String message);

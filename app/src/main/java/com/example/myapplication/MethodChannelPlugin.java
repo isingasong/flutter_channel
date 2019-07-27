@@ -3,8 +3,12 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.view.FlutterView;
 
 /**
@@ -13,34 +17,45 @@ import io.flutter.view.FlutterView;
  */
 public class MethodChannelPlugin implements MethodChannel.MethodCallHandler {
 
-    private final Activity mActivity;
+    private final FlutterActivity mFlutterActivity;
     private static String METHOD_CHANNEL = "MethodChannelPlugin";
+    private  MethodChannel.Result mResult;
 
-    public MethodChannelPlugin(Activity activity) {
-        this.mActivity = activity;
+    public MethodChannelPlugin(FlutterActivity flutterActivity) {
+        this.mFlutterActivity = flutterActivity;
     }
 
-    public static void registerWith(FlutterView flutterView) {
-        MethodChannel methodChannel = new MethodChannel(flutterView, METHOD_CHANNEL);
-        MethodChannelPlugin instance = new MethodChannelPlugin((Activity) flutterView.getContext());
+    static MethodChannelPlugin registerWith(FlutterActivity flutterActivity) {
+        MethodChannel methodChannel = new MethodChannel(flutterActivity.registrarFor(METHOD_CHANNEL).messenger(), METHOD_CHANNEL);
+        MethodChannelPlugin instance = new MethodChannelPlugin(flutterActivity);
         methodChannel.setMethodCallHandler(instance);
+        return instance;
     }
 
     @Override
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+        mResult = result;
         switch (methodCall.method) {
-            case "":
+            case "message":
+                showMessge((String) methodCall.arguments());
+                result.success("MethodChannelPlugin收到消息：" + methodCall.arguments);
                 break;
             default:
+                result.notImplemented();
                 break;
         }
 
     }
 
+    public void sendMessage(String message){
+        mResult.success(message);
+
+    }
+
     private void showMessge(String message){
-        if(mActivity instanceof IShowMessage){
-            ((IShowMessage) mActivity).onShowMessage(message);
+        if(mFlutterActivity instanceof IShowMessage){
+            ((IShowMessage) mFlutterActivity).onShowEventMessage(message);
         }
-        Toast.makeText(mActivity,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(mFlutterActivity,message,Toast.LENGTH_SHORT).show();
     }
 }

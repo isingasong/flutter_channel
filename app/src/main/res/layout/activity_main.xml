@@ -1,30 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_test"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="Hello World!"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Android!"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:gravity="center" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_methodChannel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:padding="8dp"
+                android:text="MethodChannel:"/>
+            <EditText
+                android:id="@+id/et_methodChannel_send"
+                android:layout_below="@id/tv_methodChannel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入向传输Flutter的内容"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:editable="false"
+                android:layout_below="@id/et_methodChannel_send"
+                android:id="@+id/et_methodChannel_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:hint="收到来自Flutter的数据"
+                />
+            <View
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/et_methodChannel_get"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/black"/>
 
-    <FrameLayout
-        android:layout_marginTop="100dp"
-        android:id="@+id/fl_flutter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_test"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_eventChannel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:padding="2dp"
+                android:text="EventChannel:"/>
+            <EditText
+                android:id="@+id/et_eventChannel_send"
+                android:layout_below="@id/tv_eventChannel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入向传输Flutter的内容"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:editable="false"
+                android:layout_below="@id/et_eventChannel_send"
+                android:id="@+id/et_eventChannel_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:hint="收到来自Flutter的数据"
+                />
+            <View
+                android:layout_marginTop="4dp"
+                android:layout_below="@id/et_eventChannel_get"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/black"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_basicChannel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:padding="2dp"
+                android:text="BasicChannel:"/>
+            <EditText
+                android:id="@+id/et_basicChannel_send"
+                android:layout_below="@id/tv_basicChannel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入向传输Flutter的内容"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:editable="false"
+                android:layout_below="@id/et_basicChannel_send"
+                android:id="@+id/et_basicChannel_get"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:hint="收到来自Flutter的数据"
+                />
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_flutter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Flutter!(点击嵌入Flutter界面)"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/white"
+            android:gravity="center" />
+
+        <FrameLayout
+            android:id="@+id/fl_flutter"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@color/colorAccent" />
+    </LinearLayout>
+</ScrollView>
+
+</LinearLayout>

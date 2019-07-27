@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.view.FlutterView;
 
@@ -12,9 +13,9 @@ public class EventChannelPlugin implements EventChannel.StreamHandler {
     private EventChannel.EventSink eventSink;
     private static String EVENT_CHANNEL = "EventChannelPlugin";
 
-    static EventChannelPlugin registerWith(FlutterView flutterView){
+    static EventChannelPlugin registerWith(FlutterActivity flutterActivity){
         EventChannelPlugin eventChannelPlugin = new EventChannelPlugin();
-        new EventChannel(flutterView,EVENT_CHANNEL).setStreamHandler(eventChannelPlugin);
+        new EventChannel(flutterActivity.registrarFor(EVENT_CHANNEL).messenger(),EVENT_CHANNEL).setStreamHandler(eventChannelPlugin);
         return eventChannelPlugin ;
     }
 

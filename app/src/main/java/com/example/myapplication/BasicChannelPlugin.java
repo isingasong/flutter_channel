@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.widget.Toast;
 
+import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.StringCodec;
 import io.flutter.view.FlutterView;
@@ -13,19 +14,19 @@ import io.flutter.view.FlutterView;
  */
 public class BasicChannelPlugin implements BasicMessageChannel.MessageHandler<String>,BasicMessageChannel.Reply<String> {
 
-    private final Activity mActivity;
+    private final FlutterActivity mFlutterActivity;
     private final BasicMessageChannel<String> messageChannel;
     private final String BASIC_MESSAGE_CHANNEL_PLUGIN = "BasicMessageChannelPlugin";
 
-    static BasicChannelPlugin registerWith(FlutterView flutterView){
-        return new BasicChannelPlugin(flutterView);
+    static BasicChannelPlugin registerWith(FlutterActivity flutterActivity){
+        return new BasicChannelPlugin(flutterActivity);
 
     }
 
 
-    public BasicChannelPlugin(FlutterView flutterView) {
-        this.mActivity = (Activity) flutterView.getContext();
-        this.messageChannel = new BasicMessageChannel<>(flutterView,BASIC_MESSAGE_CHANNEL_PLUGIN, StringCodec.INSTANCE);
+    public BasicChannelPlugin(FlutterActivity flutterActivity) {
+        this.mFlutterActivity = flutterActivity;
+        this.messageChannel = new BasicMessageChannel<>(flutterActivity.registrarFor(BASIC_MESSAGE_CHANNEL_PLUGIN).messenger(),BASIC_MESSAGE_CHANNEL_PLUGIN, StringCodec.INSTANCE);
         messageChannel.setMessageHandler(this);
     }
 
@@ -33,10 +34,10 @@ public class BasicChannelPlugin implements BasicMessageChannel.MessageHandler<St
     @Override
     public void onMessage(String message, BasicMessageChannel.Reply<String> reply) {
         reply.reply("BasicMessageChannel收到Message：" + message);
-        if(mActivity instanceof IShowMessage){
-            ((IShowMessage) mActivity).onShowMessage(message);
+        if(mFlutterActivity instanceof IShowMessage){
+            ((IShowMessage) mFlutterActivity).onShowBasicMessage(message);
         }
-        Toast.makeText(mActivity,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(mFlutterActivity,message,Toast.LENGTH_SHORT).show();
 
     }
 
